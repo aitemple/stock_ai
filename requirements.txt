@@ -16,7 +16,6 @@ langchain_openai
 loguru
 plotly
 pyodbc
-langchain==0.2.0
 dashscope
 tiktoken
 pydantic
