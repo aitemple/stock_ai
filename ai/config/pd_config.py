@@ -1,14 +1,19 @@
 import os
 from urllib.parse import urlencode, urlunparse
 from ai.common.decorators import singleton
+from sqlalchemy import create_engine, Engine
 
 
 @singleton
 class Database:
+    """
+    Database configuration class.
+    """
+
     def __init__(self):
         self.url = self.config_db()
 
-    def config_db():
+    def config_db(self):
         db_protected = os.getenv('DB_PROTECTED_URL')
         db_host = os.getenv('DB_HOST')
         db_port = os.getenv('DB_PORT')
@@ -31,3 +36,9 @@ class Database:
 
         return urlunparse(
             (db_protected, f"{db_user}:{db_pwd}@{db_host}:{db_port}", f"/{db_name}", '', urlencode(param), ''))
+
+    def create_engine(self) -> Engine:
+        """
+        Create a new engine instance.
+        """
+        return create_engine(self.url)
